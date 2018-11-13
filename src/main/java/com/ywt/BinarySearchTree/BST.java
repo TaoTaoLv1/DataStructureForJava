@@ -52,5 +52,35 @@ public class BST<T extends Comparable<T>>{
         return node;
     }
 
+    public boolean contains(T e){
+        return contains(root, e);
+    }
 
+    public boolean contains(Node node, T e){
+        if (root == null){
+            return false;
+        }
+        if (e.compareTo(node.e) == 0){
+            return true;
+        }else if (e.compareTo(node.e) < 0){
+            return contains(node.left, e);
+        }else {
+            return contains(node.right, e);
+        }
+    }
+
+    //前序遍历
+    public void preOrder(){
+        preOrder(root);
+    }
+
+    private void preOrder(Node node){
+        if (node == null){
+            return;
+        }
+
+        System.out.println(node.e);
+        preOrder(node.left);
+        preOrder(node.right);
+    }
 }
