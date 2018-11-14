@@ -22,6 +22,9 @@ public class BSTMain {
         ////////////////////
 
         bst.preOrder();
+
+        System.out.println();
+        System.out.println(bst);
     }
 
 }
