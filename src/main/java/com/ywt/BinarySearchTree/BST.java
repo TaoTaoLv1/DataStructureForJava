@@ -1,5 +1,7 @@
 package com.ywt.BinarySearchTree;
 
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 
 /**
@@ -143,6 +145,105 @@ public class BST<T extends Comparable<T>>{
         postOrder(node.left);
         postOrder(node.right);
         System.out.println(node.e);
+    }
+
+    /**
+     * 层序遍历
+     */
+    public void levelOrder(){
+        Queue<Node> q = new LinkedList<>();
+        q.add(root);
+        while (!q.isEmpty()){
+            Node cur = q.remove();
+            System.out.println(cur.e);
+
+            if (cur.left != null){
+                q.add(cur.left);
+            }
+            if (cur.right != null){
+                q.add(cur.right);
+            }
+        }
+    }
+
+    /**
+     * 寻找最小值
+     * @return
+     */
+    public T minnum(){
+        if (size == 0){
+            throw new IllegalArgumentException("树为空");
+        }
+        return minnum(root).e;
+    }
+
+    private Node minnum(Node node){
+        if (node.left == null){
+            return node;
+        }
+        return minnum(node.left);
+    }
+
+    /**
+     * 寻找最大值
+     * @return
+     */
+    public T maxnum(){
+        if (size == 0){
+            throw new IllegalArgumentException("树为空");
+        }
+        return maxnum(root).e;
+    }
+
+    private Node maxnum(Node node){
+        if (node.right == null){
+            return node;
+        }
+        return maxnum(node.right);
+    }
+
+    /**
+     * 删除最小值
+     * @return
+     */
+    public T removeMin(){
+        T ret = minnum();
+        root = removeMin(root);
+        return ret;
+    }
+
+    private Node removeMin(Node node){
+        if (node.left == null){
+            Node rightNode = node.right;
+            node.right = null;
+            size --;
+            return rightNode;
+        }
+
+        node.left = removeMin(node.left);
+        return node;
+    }
+
+    /**
+     * 删除最大值
+     * @return
+     */
+    public T removeMax(){
+        T ret = maxnum();
+        root = removeMax(root);
+        return ret;
+    }
+
+    private Node removeMax(Node node){
+        if (node.right == null){
+            Node leftNode = node.left;
+            node.left = null;
+            size --;
+            return leftNode;
+        }
+
+        node.right = removeMax(node.right);
+        return node;
     }
 
     @Override
