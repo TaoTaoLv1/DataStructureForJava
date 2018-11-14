@@ -1,5 +1,7 @@
 package com.ywt.BinarySearchTree;
 
+import java.util.Stack;
+
 /**
  * @author: YwT
  * @description: 二分搜索树实现
@@ -84,6 +86,29 @@ public class BST<T extends Comparable<T>>{
         System.out.println(node.e);
         preOrder(node.left);
         preOrder(node.right);
+    }
+
+    /**
+     * 前序遍历（非递归）
+     */
+    public void preOrderNR(){
+        preOrderNR(root);
+    }
+
+    private void preOrderNR(Node node){
+        Stack<Node> stack = new Stack<>();
+        stack.push(root);
+        while (!stack.isEmpty()){
+            Node cur = stack.pop();
+            System.out.println(cur.e);
+
+            if (cur.right != null){
+                stack.push(cur.right);
+            }
+            if (cur.left != null){
+                stack.push(cur.left);
+            }
+        }
     }
 
     /**
