@@ -1,7 +1,5 @@
 package com.ywt.queue;
 
-import com.ywt.linelist.LinkedList;
-
 /**
  * @author: YwT
  * @description 链表 实现 队列 数据结构

@@ -1,4 +1,4 @@
-package com.ywt.linelist;
+package com.ywt.linedlist;
 
 /**
  * @description: 链表
@@ -140,6 +140,24 @@ public class LinkedList<T> {
 
     public T removeLast(){
         return remove(size - 1);
+    }
+
+    // 从链表中删除元素e
+    public void removeElement(T e){
+
+        Node prev = dummyHead;
+        while(prev.next != null){
+            if(prev.next.t.equals(e))
+                break;
+            prev = prev.next;
+        }
+
+        if(prev.next != null){
+            Node delNode = prev.next;
+            prev.next = delNode.next;
+            delNode.next = null;
+            size --;
+        }
     }
 
     @Override

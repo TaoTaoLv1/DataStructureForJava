@@ -1,6 +1,6 @@
 package com.ywt.stack;
 
-import com.ywt.linelist.LinkedList;
+import com.ywt.linedlist.LinkedList;
 
 
 /**

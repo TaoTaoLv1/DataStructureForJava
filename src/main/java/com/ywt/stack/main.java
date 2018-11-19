@@ -1,7 +1,5 @@
 package com.ywt.stack;
 
-import com.ywt.linelist.LinkedList;
-
 /**
  * @description:
  * @author: YwT
