@@ -1,4 +1,4 @@
-package com.ywt.linedlist;
+package com.ywt.linkedlist;
 
 /**
  * @description:

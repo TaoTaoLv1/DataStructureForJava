@@ -1,6 +1,6 @@
 package com.ywt.set;
 
-import com.ywt.linedlist.LinkedList;
+import com.ywt.linkedlist.LinkedList;
 
 /**
  * @author: YwT
