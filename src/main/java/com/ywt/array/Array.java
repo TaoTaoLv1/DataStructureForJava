@@ -14,6 +14,15 @@ public class Array<T> {
         size = 0;
     }
 
+    public Array(T[] arr){
+        data = (T[]) new Object[arr.length];
+        int i = 0;
+        for (T t : arr) {
+            data[i++] = t;
+        }
+        size = arr.length;
+    }
+
     // 无参数的构造函数，默认数组的容量capacity=10
     public Array(){
         this(10);
@@ -132,6 +141,15 @@ public class Array<T> {
         int index = find(e);
         if(index != -1)
             remove(index);
+    }
+
+    public void swap(int a, int b){
+        if (a < 0 || a >= size || b < 0 || b >= size){
+            throw new IllegalArgumentException("索引超标");
+        }
+        T temp = data[a];
+        data[a] = data[b];
+        data[b] = temp;
     }
 
     @Override
