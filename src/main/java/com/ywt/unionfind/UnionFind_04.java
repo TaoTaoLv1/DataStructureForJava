@@ -5,17 +5,17 @@ package com.ywt.unionfind;
  * @description: 并查集 第三版
  * @create: 2018-11-26 22:45
  **/
-public class UnionFind_03 implements UF {
+public class UnionFind_04 implements UF {
 
     private int[] parents;
-    //sz[i] ： 表示以 i 为根的集合元素个数
-    private int[] sz;
+    //rank[i] 表示以 i 为根的树的层数
+    private int[] rank;
 
-    public UnionFind_03(int size) {
+    public UnionFind_04(int size) {
         parents = new int[size];
         for (int i = 0; i < parents.length; i++ ) {
             parents[i] = i;
-            sz[i] = 1;
+            rank[i] = 1;
         }
     }
 
@@ -50,12 +50,13 @@ public class UnionFind_03 implements UF {
         if (pRoot == qRoot){
             return;
         }
-        if (sz[pRoot] < sz[qRoot]){
+        if (rank[pRoot] < rank[qRoot]){
             parents[pRoot] = qRoot;
-            sz[qRoot] += sz[pRoot];
+        }else if (rank[pRoot] > rank[qRoot]){
+            parents[qRoot] = pRoot;
         }else {
             parents[qRoot] = pRoot;
-            sz[pRoot] += sz[qRoot];
+            rank[pRoot] += 1;
         }
     }
 }
