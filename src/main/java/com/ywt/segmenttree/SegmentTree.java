@@ -54,15 +54,6 @@ public class SegmentTree<T> {
     }
 
     /**
-     * 返回当前节点的 左孩子索引
-     * @param index
-     * @return
-     */
-    private int leftChild(int index){
-        return index * 2 + 1;
-    }
-
-    /**
      * @param queryL  数组左边界
      * @param queryR  数组右边界
      * @return  返回【L....R】的值
@@ -104,6 +95,15 @@ public class SegmentTree<T> {
         return merger.merge(leftResult, rightResult);
     }
 
+
+    /**
+     * 返回当前节点的 左孩子索引
+     * @param index
+     * @return
+     */
+    private int leftChild(int index){
+        return index * 2 + 1;
+    }
 
     /**
      * 返回当前节点的 右孩子索引
