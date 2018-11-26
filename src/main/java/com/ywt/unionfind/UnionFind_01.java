@@ -12,9 +12,8 @@ public class UnionFind_01 implements UF {
 
     public UnionFind_01(int size) {
         ids = new int[size];
-        int i = 0;
-        for (int id : ids) {
-            id = i++;
+        for (int i = 0; i < ids.length; i++ ) {
+            ids[i] = i;
         }
     }
 
