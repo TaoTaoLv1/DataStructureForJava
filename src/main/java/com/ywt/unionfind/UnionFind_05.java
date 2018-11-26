@@ -2,16 +2,16 @@ package com.ywt.unionfind;
 
 /**
  * @author: YwT
- * @description: 并查集 第四版
+ * @description: 并查集 第五版
  * @create: 2018-11-26 22:45
  **/
-public class UnionFind_04 implements UF {
+public class UnionFind_05 implements UF {
 
     private int[] parents;
-    //rank[i] 表示以 i 为根的树的层数
+    //rank[i] 表示以 i 为根的树的排名
     private int[] rank;
 
-    public UnionFind_04(int size) {
+    public UnionFind_05(int size) {
         parents = new int[size];
         for (int i = 0; i < parents.length; i++ ) {
             parents[i] = i;
@@ -31,6 +31,7 @@ public class UnionFind_04 implements UF {
         }
 
         while (p != parents[p]){
+            parents[p] = parents[parents[p]]; //路径压缩
             p = parents[p];
         }
         return p;
