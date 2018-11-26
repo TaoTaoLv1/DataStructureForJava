@@ -95,6 +95,45 @@ public class SegmentTree<T> {
         return merger.merge(leftResult, rightResult);
     }
 
+    /**
+     * 更新操作
+     * @param index 在 index 位置更新
+     * @param e
+     */
+    public void set(int index, T e){
+        if (index < 0 ||index > data.length){
+            throw  new IllegalArgumentException("下标越界");
+        }
+        set(0,0,data.length - 1, index, e);
+    }
+
+    /**
+     * 更新操作具体实现
+     * @param treeIndex  以 treeIndex 为根的树
+     * @param l           左边界
+     * @param r           右边界
+     * @param index       在 index 更新
+     * @param e            元素e
+     */
+    private void set(int treeIndex, int l, int r, int index, T e){
+        if (l == r){
+            tree[treeIndex] = e;
+            return;
+        }
+
+        int mid = l + (r - l) / 2;
+        int leftChildTree = leftChild(treeIndex);
+        int rightChildTree = rightChild(treeIndex);
+
+        if (index >= mid + 1){
+            set(rightChildTree, mid + 1, r, index, e);
+        }else {
+            set(leftChildTree, l, mid ,index, e);
+        }
+
+        tree[treeIndex] = merger.merge(tree[leftChildTree], tree[rightChildTree]);
+    }
+
 
     /**
      * 返回当前节点的 左孩子索引
