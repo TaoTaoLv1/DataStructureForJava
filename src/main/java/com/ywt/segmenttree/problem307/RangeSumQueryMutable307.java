@@ -1,4 +1,4 @@
-package com.ywt.leetcode.problem307;
+package com.ywt.segmenttree.problem307;
 
 import java.util.Arrays;
 

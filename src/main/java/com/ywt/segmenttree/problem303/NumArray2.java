@@ -1,4 +1,4 @@
-package com.ywt.leetcode.problem303;
+package com.ywt.segmenttree.problem303;
 
 /**
  * @author: YwT

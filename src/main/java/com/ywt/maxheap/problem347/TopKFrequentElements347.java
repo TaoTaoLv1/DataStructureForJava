@@ -1,4 +1,4 @@
-package com.ywt.leetcode.problem347;
+package com.ywt.maxheap.problem347;
 
 import java.util.LinkedList;
 import java.util.List;

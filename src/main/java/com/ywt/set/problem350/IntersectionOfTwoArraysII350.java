@@ -1,4 +1,4 @@
-package com.ywt.leetcode.problem350;
+package com.ywt.set.problem350;
 
 import java.util.ArrayList;
 import java.util.TreeMap;

@@ -62,15 +62,24 @@ public class Trie {
      * @return
      */
     public boolean contains(String word){
+        Node node = find(word);
+        return  node== null ? false: node.isWord;
+    }
+
+    public boolean isPrefix(String prefix){
+        return find(prefix) == null ? false : true;
+    }
+
+    private Node find(String s){
         Node cur = root;
-        char[] cs = word.toCharArray();
+        char[] cs = s.toCharArray();
         for (char c  : cs) {
             if (cur.next.get(c) == null){
-                return false;
+                return null;
             }
             cur = cur.next.get(c);
         }
 
-        return cur.isWord;
+        return cur;
     }
 }

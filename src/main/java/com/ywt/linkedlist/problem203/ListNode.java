@@ -1,4 +1,4 @@
-package com.ywt.leetcode.problem203;
+package com.ywt.linkedlist.problem203;
 
 /**
  * @author: YwT

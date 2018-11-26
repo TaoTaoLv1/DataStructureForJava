@@ -1,4 +1,4 @@
-package com.ywt.leetcode.problem349;
+package com.ywt.set.problem349;
 
 import java.util.ArrayList;
 import java.util.List;

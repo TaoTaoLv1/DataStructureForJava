@@ -1,4 +1,4 @@
-package com.ywt.leetcode.problem804;
+package com.ywt.set.problem804;
 
 import java.util.TreeSet;
 
