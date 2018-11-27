@@ -61,9 +61,17 @@ public class AVLTree<K extends Comparable<K>, V>{
         node.height = Math.max(getHeight(node.left), getHeight(node.right)) + 1;
 
         int balanceFactor = getBalanceFactor(node);
-        if (balanceFactor > 1){
-            //TODO
+
+        //进行右旋转
+        if (balanceFactor > 1 && getBalanceFactor(node.left) >= 0){
+            return rightRotate(node);
         }
+
+        //进行左旋转
+        if (balanceFactor < -1 && getBalanceFactor(node.right) >= 0){
+            return leftRotate(node);
+        }
+
         return node;
     }
 
@@ -180,6 +188,61 @@ public class AVLTree<K extends Comparable<K>, V>{
     }
 
     /**
+     * 对节点y进行向左旋转操作，返回旋转后新的根节点x
+     *          y                             x
+     *       /  \                          /   \
+     *     T1   x      向左旋转 (y)       y     z
+     *         / \   - - - - - - - ->   / \   / \
+     *       T2  z                     T1 T2 T3 T4
+     *        / \
+     *      T3 T4
+     * @param y
+     * @return
+     */
+    private Node leftRotate(Node y){
+        Node x = y.right;
+        Node T2 = x.left;
+
+        //左旋转过程
+        x.left = y;
+        y.right = T2;
+
+        //更新height
+        y.height = Math.max(getHeight(y.left), getHeight(y.right)) + 1;
+        x.height = Math.max(getHeight(x.left), getHeight(x.right)) + 1;
+
+        return x;
+
+    }
+
+
+    /**
+     * 对节点 y 进行右旋转操作，返回旋转后的新节点
+     *          y                              x
+     *        / \                           /   \
+     *      x   T4     向右旋转 (y)        z     y
+     *     / \       - - - - - - - ->    / \   / \
+     *    z   T3                       T1  T2 T3 T4
+     *   / \
+     * T1   T2
+     * @param y
+     * @return
+     */
+    private Node rightRotate(Node y){
+        Node x = y.left;
+        Node T3 = y.right;
+
+        //右旋转过程
+        x.right = y;
+        y.left = T3;
+
+        //更新height值
+        y.height = Math.max(getHeight(y.left), getHeight(y.right)) + 1;
+        x.height = Math.max(getHeight(x.left), getHeight(x.right)) + 1;
+        return x;
+    }
+
+    /**
      * 判断是否是一颗平衡二叉树
      * @param node
      * @return
@@ -188,7 +251,7 @@ public class AVLTree<K extends Comparable<K>, V>{
         if (node == null){
             return true;
         }
-        if (getBalanceFactor(node) > 1){
+        if (Math.abs(getBalanceFactor(node)) > 1){
             return false;
         }
         return isBalanced(node.left) && isBalanced(node.right);
@@ -243,6 +306,6 @@ public class AVLTree<K extends Comparable<K>, V>{
         if (node == null){
             return 0;
         }
-        return Math.abs(getHeight(node.left) - getHeight(node.right));
+        return getHeight(node.left) - getHeight(node.right);
     }
 }
