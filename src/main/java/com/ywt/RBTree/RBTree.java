@@ -2,7 +2,8 @@ package com.ywt.RBTree;
 
 /**
  * @author: YwT
- * @description: 红黑树
+ * @description: 红黑树 是保持“黑平衡”的二叉树
+ * 查找时间复杂度：O(logN)
  * @create: 2018-11-27 21:22
  **/
 public class RBTree<K extends Comparable<K>, V> {
@@ -10,13 +11,13 @@ public class RBTree<K extends Comparable<K>, V> {
     private static final boolean RED = true;
     private static final boolean BLACK = false;
 
-    private class Node{
+    private class Node {
         public K key;
         public V value;
         public Node left, right;
         public boolean color;
 
-        public Node(K key, V value){
+        public Node(K key, V value) {
             this.key = key;
             this.value = value;
             left = null;
@@ -28,45 +29,75 @@ public class RBTree<K extends Comparable<K>, V> {
     private Node root;
     private int size;
 
-    public RBTree(){
+    public RBTree() {
         root = null;
         size = 0;
     }
 
 
-    public int getSize(){
+    public int getSize() {
         return size;
     }
 
 
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return size == 0;
     }
 
     // 判断节点node的颜色
-    private boolean isRed(Node node){
-        if(node == null)
+    private boolean isRed(Node node) {
+        if (node == null)
             return BLACK;
         return node.color;
     }
 
-    // 向二分搜索树中添加新的元素(key, value)
-    public void add(K key, V value){
-        root = add(root, key, value);
+
+    /**
+     * 左旋转
+     *        node                     x
+     *       /   \     左旋转        /  \
+     *      T1   x   --------->   node  T3
+     *         / \              /   \
+     *       T2 T3            T1   T2
+     * @param node
+     * @return  旋转后的根
+     */
+    private Node leftRotate(Node node){
+        Node x = node.right;
+
+        //左旋转
+        node.right = x.left;
+        x.left = node;
+
+        x.color = node.color;
+        node.color = RED;
+        return x;
     }
 
-    // 向以node为根的二分搜索树中插入元素(key, value)，递归算法
-    // 返回插入新节点后二分搜索树的根
-    private Node add(Node node, K key, V value){
+    // 向红黑树中添加新的元素(key, value)
+    public void add(K key, V value) {
+        root = add(root, key, value);
+        root.color = BLACK; //最终节点为黑色
+    }
 
-        if(node == null){
-            size ++;
+    /**
+     * 向以node为根的红黑树中插入元素(key, value)，递归算法
+     *
+     * @param node
+     * @param key
+     * @param value
+     * @return 返回插入新节点后红黑树的根
+     */
+    private Node add(Node node, K key, V value) {
+
+        if (node == null) {
+            size++;
             return new Node(key, value);
         }
 
-        if(key.compareTo(node.key) < 0)
+        if (key.compareTo(node.key) < 0)
             node.left = add(node.left, key, value);
-        else if(key.compareTo(node.key) > 0)
+        else if (key.compareTo(node.key) > 0)
             node.right = add(node.right, key, value);
         else // key.compareTo(node.key) == 0
             node.value = value;
@@ -75,55 +106,55 @@ public class RBTree<K extends Comparable<K>, V> {
     }
 
     // 返回以node为根节点的二分搜索树中，key所在的节点
-    private Node getNode(Node node, K key){
+    private Node getNode(Node node, K key) {
 
-        if(node == null)
+        if (node == null)
             return null;
 
-        if(key.equals(node.key))
+        if (key.equals(node.key))
             return node;
-        else if(key.compareTo(node.key) < 0)
+        else if (key.compareTo(node.key) < 0)
             return getNode(node.left, key);
         else // if(key.compareTo(node.key) > 0)
             return getNode(node.right, key);
     }
 
 
-    public boolean contains(K key){
+    public boolean contains(K key) {
         return getNode(root, key) != null;
     }
 
 
-    public V get(K key){
+    public V get(K key) {
 
         Node node = getNode(root, key);
         return node == null ? null : node.value;
     }
 
 
-    public void set(K key, V newValue){
+    public void set(K key, V newValue) {
         Node node = getNode(root, key);
-        if(node == null)
+        if (node == null)
             throw new IllegalArgumentException(key + " doesn't exist!");
 
         node.value = newValue;
     }
 
     // 返回以node为根的二分搜索树的最小值所在的节点
-    private Node minimum(Node node){
-        if(node.left == null)
+    private Node minimum(Node node) {
+        if (node.left == null)
             return node;
         return minimum(node.left);
     }
 
     // 删除掉以node为根的二分搜索树中的最小节点
     // 返回删除节点后新的二分搜索树的根
-    private Node removeMin(Node node){
+    private Node removeMin(Node node) {
 
-        if(node.left == null){
+        if (node.left == null) {
             Node rightNode = node.right;
             node.right = null;
-            size --;
+            size--;
             return rightNode;
         }
 
@@ -132,10 +163,10 @@ public class RBTree<K extends Comparable<K>, V> {
     }
 
     // 从二分搜索树中删除键为key的节点
-    public V remove(K key){
+    public V remove(K key) {
 
         Node node = getNode(root, key);
-        if(node != null){
+        if (node != null) {
             root = remove(root, key);
             return node.value;
         }
