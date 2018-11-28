@@ -1,5 +1,9 @@
 package com.ywt.RBTree;
 
+import com.ywt.trie.FileOperation;
+
+import java.util.ArrayList;
+
 /**
  * @author: YwT
  * @description: 红黑树 是保持“黑平衡”的二叉树
@@ -136,6 +140,29 @@ public class RBTree<K extends Comparable<K>, V> {
         else // key.compareTo(node.key) == 0
             node.value = value;
 
+        //      node
+        //    /    \    这时要进行左旋转
+        // Black   red
+        if (isRed(node.right) && !isRed(node.left)){
+            node = leftRotate(node);
+        }
+
+        //       node
+        //      /
+        //     red     这时要进行右旋转
+        //    /
+        //  red
+        if (isRed(node.left) && isRed(node.left.left)){
+            node = rightRotate(node);
+        }
+
+        //      node
+        //    /    \    这时要进行颜色翻转
+        // red    red
+        if (isRed(node.left) && isRed(node.right)){
+            flipColors(node);
+        }
+
         return node;
     }
 
@@ -248,5 +275,29 @@ public class RBTree<K extends Comparable<K>, V> {
 
             return successor;
         }
+    }
+
+    public static void main(String[] args){
+
+        System.out.println("Pride and Prejudice");
+
+        ArrayList<String> words = new ArrayList<>();
+        if(FileOperation.readFile("src/pride-and-prejudice.txt", words)) {
+            System.out.println("Total words: " + words.size());
+
+            RBTree<String, Integer> map = new RBTree<>();
+            for (String word : words) {
+                if (map.contains(word))
+                    map.set(word, map.get(word) + 1);
+                else
+                    map.add(word, 1);
+            }
+
+            System.out.println("Total different words: " + map.getSize());
+            System.out.println("Frequency of PRIDE: " + map.get("pride"));
+            System.out.println("Frequency of PREJUDICE: " + map.get("prejudice"));
+        }
+
+        System.out.println();
     }
 }
