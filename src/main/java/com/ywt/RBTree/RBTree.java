@@ -60,9 +60,9 @@ public class RBTree<K extends Comparable<K>, V> {
      *         / \              /   \
      *       T2 T3            T1   T2
      * @param node
-     * @return  旋转后的根
+     * @return 旋转后的根
      */
-    private Node leftRotate(Node node){
+    private Node leftRotate(Node node) {
         Node x = node.right;
 
         //左旋转
@@ -72,6 +72,40 @@ public class RBTree<K extends Comparable<K>, V> {
         x.color = node.color;
         node.color = RED;
         return x;
+    }
+
+    /**
+     * 右旋转
+     *
+     *          node                   x
+     *        /   \     右旋转       /  \
+     *       x    T2   ------->   y   node
+     *      / \                       /  \
+     *     y  T1                     T1  T2
+     * @param node
+     * @return 旋转后的根
+     */
+    private Node rightRotate(Node node){
+        Node x = node.left;
+
+        //右旋转
+        node.left = x.right;
+        x.right = node;
+
+        x.color = node.color;
+        node.color = RED;
+
+        return x;
+    }
+
+    /**
+     * 颜色翻转
+     *
+     * @param node
+     */
+    private void flipColors(Node node) {
+       node.color = RED;
+       node.right.color = node.left.color = BLACK;
     }
 
     // 向红黑树中添加新的元素(key, value)
