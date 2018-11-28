@@ -2,20 +2,26 @@ package com.ywt.RBTree;
 
 /**
  * @author: YwT
+ * @description: 红黑树
  * @create: 2018-11-27 21:22
  **/
 public class RBTree<K extends Comparable<K>, V> {
+
+    private static final boolean RED = true;
+    private static final boolean BLACK = false;
 
     private class Node{
         public K key;
         public V value;
         public Node left, right;
+        public boolean color;
 
         public Node(K key, V value){
             this.key = key;
             this.value = value;
             left = null;
             right = null;
+            color = RED;
         }
     }
 
@@ -35,6 +41,13 @@ public class RBTree<K extends Comparable<K>, V> {
 
     public boolean isEmpty(){
         return size == 0;
+    }
+
+    // 判断节点node的颜色
+    private boolean isRed(Node node){
+        if(node == null)
+            return BLACK;
+        return node.color;
     }
 
     // 向二分搜索树中添加新的元素(key, value)
