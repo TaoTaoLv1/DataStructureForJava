@@ -1,5 +1,7 @@
 package com.ywt.trie;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -81,5 +83,44 @@ public class Trie {
         }
 
         return cur;
+    }
+
+    public void preOrder(){
+        preOrder(root, 0);
+    }
+
+    //前序遍历
+    private void preOrder(Node node, int layer){
+        for (Character c : node.next.keySet()){
+            for (int i = 0; i < layer; i++){
+                System.out.print("-");
+            }
+            System.out.print(c);
+            if (node.next.get(c).isWord){
+                System.out.print("(end)");
+            }
+            System.out.println();
+            preOrder(node.next.get(c), layer + 1);
+        }
+    }
+
+    public void  deepOrder(){
+        StringBuilder word = new StringBuilder();
+        List<String> words = new ArrayList<>();
+        deepOrder(root, word, words);
+        for (String w : words) {
+            System.out.println(w);
+        }
+    }
+
+    private void deepOrder(Node node, StringBuilder word, List<String> words){
+        for (Character c : node.next.keySet()) {
+            word.append(c);
+            if (node.next.get(c).isWord){
+                words.add(word.toString());
+            }
+            deepOrder(node.next.get(c), word, words);
+            word.deleteCharAt(word.length() - 1);
+        }
     }
 }
